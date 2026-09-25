@@ -4,7 +4,18 @@ Blog de notícias no estilo da [api-fake-blog](https://github.com/profdiegocandi
 [front-blog-angularjs](https://github.com/profdiegocandido/front-blog-angularjs), agora com banco de dados de verdade,
 login e interação.
 
-**👉 Para rodar, siga o [PASSO-A-PASSO.md](PASSO-A-PASSO.md).**
+## Como rodar
+
+1. Crie um projeto no [Supabase](https://supabase.com) e rode `supabase/schema.sql` e depois `supabase/seed.sql` no SQL Editor.
+2. Em **Authentication → URL Configuration**, adicione `http://localhost:3000/redefinir-senha.html` nas Redirect URLs.
+3. Copie `api/.env.example` para `api/.env` e preencha com as chaves do Supabase.
+4. Rode a API e abra http://localhost:3000:
+
+```bash
+cd api
+npm install
+npm start
+```
 
 ## Funcionalidades
 
