@@ -1,0 +1,107 @@
+<!-- CABEÇALHO -->
+<section class="hero-top container pt-5 pb-4">
+    <p class="eyebrow mb-2">Edição de hoje</p>
+    <h1 class="display-title">Tecnologia, games e o que vem por aí.</h1>
+</section>
+
+<!-- CARREGANDO: esqueleto -->
+<section class="container" ng-if="carregando">
+    <div class="row g-4">
+        <div class="col-md-6 col-lg-4" ng-repeat="n in [1,2,3]">
+            <div class="skeleton skeleton-img"></div>
+            <div class="skeleton skeleton-line w-25 mt-3"></div>
+            <div class="skeleton skeleton-line mt-2"></div>
+            <div class="skeleton skeleton-line w-75 mt-2"></div>
+        </div>
+    </div>
+</section>
+
+<!-- ERRO -->
+<section class="container" ng-if="erro">
+    <div class="empty-state">
+        <i class="bi bi-plug"></i>
+        <h2 class="h4 mt-3">Não conseguimos carregar as postagens</h2>
+        <p class="text-secondary">Confira se a API está rodando e se o Supabase está configurado.</p>
+    </div>
+</section>
+
+<!-- DESTAQUE -->
+<section class="container mb-5" ng-if="!carregando && mostrarDestaque()">
+    <a class="featured" ng-href="#!/post/{{ publicacoes[0].id }}">
+        <div class="row g-0 align-items-stretch">
+            <div class="col-lg-7">
+                <div class="featured-img">
+                    <img ng-src="{{ publicacoes[0].thumbImage }}" alt="{{ publicacoes[0].thumbImageAltText }}">
+                </div>
+            </div>
+            <div class="col-lg-5 d-flex">
+                <div class="featured-body">
+                    <span class="tag">{{ publicacoes[0].category }}</span>
+                    <h2 class="featured-title">{{ publicacoes[0].title }}</h2>
+                    <p class="featured-desc">{{ publicacoes[0].description }}</p>
+                    <div class="d-flex align-items-center justify-content-between mt-auto pt-3">
+                        <div class="author">
+                            <img class="avatar" ng-src="{{ publicacoes[0].profileThumbImage }}" alt="">
+                            <div>
+                                <div class="author-name">{{ publicacoes[0].profileName }}</div>
+                                <div class="author-meta">{{ publicacoes[0].postDate | dataBr }}</div>
+                            </div>
+                        </div>
+                        <span class="read-more">Ler mais <i class="bi bi-arrow-right"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </a>
+</section>
+
+<!-- FILTROS -->
+<section class="container" ng-if="!carregando && !erro">
+    <div class="toolbar">
+        <div class="chips">
+            <button class="chip" ng-class="{active: !categoria}" ng-click="filtrar('')">Todas</button>
+            <button class="chip" ng-repeat="c in categorias" ng-class="{active: categoria === c}" ng-click="filtrar(c)">{{ c }}</button>
+        </div>
+        <div class="search">
+            <i class="bi bi-search"></i>
+            <input type="search" class="form-control" placeholder="Buscar postagens..." ng-model="$parent.busca">
+        </div>
+    </div>
+
+    <!-- GRADE DE POSTS -->
+    <div class="row g-4 mt-1">
+        <div class="col-md-6 col-lg-4" ng-repeat="publicacao in filtrados()" ng-if="!mostrarDestaque() || publicacao.id !== publicacoes[0].id">
+            <a class="post-card" ng-href="#!/post/{{ publicacao.id }}">
+                <div class="post-card-img">
+                    <img ng-src="{{ publicacao.thumbImage }}" alt="{{ publicacao.thumbImageAltText }}" loading="lazy">
+                    <span class="tag tag-float">{{ publicacao.category }}</span>
+                </div>
+                <div class="post-card-body">
+                    <h3 class="post-card-title">{{ publicacao.title }}</h3>
+                    <p class="post-card-desc">{{ publicacao.description }}</p>
+                    <div class="post-card-footer">
+                        <div class="author">
+                            <img class="avatar avatar-sm" ng-src="{{ publicacao.profileThumbImage }}" alt="">
+                            <div>
+                                <div class="author-name small">{{ publicacao.profileName }}</div>
+                                <div class="author-meta">{{ publicacao.postDate | dataBr }}</div>
+                            </div>
+                        </div>
+                        <div class="stats">
+                            <button class="like-mini" ng-class="{liked: publicacao.curtidoPorMim}" ng-click="curtir(publicacao, $event)" aria-label="Curtir">
+                                <i class="bi" ng-class="publicacao.curtidoPorMim ? 'bi-heart-fill' : 'bi-heart'"></i> {{ publicacao.curtidas }}
+                            </button>
+                            <span><i class="bi bi-chat"></i> {{ publicacao.comentarios }}</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="empty-state" ng-if="!filtrados().length">
+        <i class="bi bi-search"></i>
+        <h2 class="h5 mt-3">Nenhuma postagem encontrada</h2>
+        <p class="text-secondary mb-0">Tente outra palavra ou categoria.</p>
+    </div>
+</section>

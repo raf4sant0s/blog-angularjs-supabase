@@ -1,0 +1,28 @@
+<div class="container auth-page">
+    <div class="auth-card auth-card-sm">
+        <div class="auth-form">
+            <div class="auth-icon"><i class="bi bi-key"></i></div>
+            <h1 class="auth-title">Esqueceu a senha?</h1>
+
+            <div ng-if="!enviado">
+                <p class="text-secondary">Sem problema. Digite seu e-mail e enviaremos um link para você criar uma nova senha.</p>
+                <form ng-submit="enviar()" name="f" novalidate>
+                    <div class="mb-4">
+                        <label class="form-label" for="email">E-mail</label>
+                        <input id="email" type="email" class="form-control form-control-lg" ng-model="form.email" required placeholder="voce@email.com" autocomplete="email">
+                    </div>
+                    <button class="btn btn-ink btn-lg w-100 rounded-pill" type="submit" ng-disabled="f.$invalid || enviando">
+                        <span class="spinner-border spinner-border-sm me-2" ng-if="enviando"></span>Enviar link
+                    </button>
+                </form>
+            </div>
+
+            <div ng-if="enviado" class="alert alert-success-soft">
+                <i class="bi bi-envelope-check me-2"></i>{{ enviado }}
+                <div class="small mt-2 text-secondary">Não chegou? Olhe a caixa de spam.</div>
+            </div>
+
+            <p class="text-center mt-4 mb-0 small"><a href="#!/login" class="link-accent fw-semibold"><i class="bi bi-arrow-left"></i> Voltar para o login</a></p>
+        </div>
+    </div>
+</div>

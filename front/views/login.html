@@ -1,0 +1,33 @@
+<div class="container auth-page">
+    <div class="auth-card">
+        <div class="auth-side d-none d-md-flex">
+            <div class="brand text-white">Pauta<span class="brand-dot">.</span></div>
+            <blockquote class="auth-quote">“Boas histórias começam com uma boa conversa.”</blockquote>
+            <p class="text-white-50 small mb-0">Entre para curtir postagens e participar dos comentários.</p>
+        </div>
+
+        <div class="auth-form">
+            <h1 class="auth-title">Entrar</h1>
+            <p class="text-secondary">Que bom te ver de novo.</p>
+
+            <form ng-submit="entrar()" name="f" novalidate>
+                <div class="mb-3">
+                    <label class="form-label" for="email">E-mail</label>
+                    <input id="email" type="email" class="form-control form-control-lg" ng-model="form.email" required placeholder="voce@email.com" autocomplete="email">
+                </div>
+                <div class="mb-2">
+                    <label class="form-label" for="senha">Senha</label>
+                    <input id="senha" type="password" class="form-control form-control-lg" ng-model="form.senha" required placeholder="••••••" autocomplete="current-password">
+                </div>
+                <div class="text-end mb-4">
+                    <a href="#!/esqueci-senha" class="link-accent small">Esqueci minha senha</a>
+                </div>
+                <button class="btn btn-ink btn-lg w-100 rounded-pill" type="submit" ng-disabled="f.$invalid || enviando">
+                    <span class="spinner-border spinner-border-sm me-2" ng-if="enviando"></span>Entrar
+                </button>
+            </form>
+
+            <p class="text-center mt-4 mb-0 small">Ainda não tem conta? <a href="#!/cadastro" class="link-accent fw-semibold">Criar conta</a></p>
+        </div>
+    </div>
+</div>
